@@ -1,0 +1,40 @@
+import java.util.*;
+public class Solution {
+    /**
+     * @param nums: An integer array
+     * @return: Minimum number of operations to turn array into a palindrome
+     */
+    public int minimumOperations(int[] nums) {
+        // write your code here
+        int i = 0, j = nums.length - 1;
+        int a = nums[i], b = nums[j];
+        int res = 0;
+        int[] ans = nums;
+        while (i < j) {
+            if (a < b) {
+                a += nums[++i];
+                ++res;
+                ans[i] = a;
+                ans[i-1] = -1;
+            } else if (b < a) {
+                b += nums[--j];
+                ++res;
+                ans[j] = b;
+                ans[j+1] = -1;
+            } else {
+                a = nums[++i];
+                b = nums[--j];
+            }
+        }
+        List<Integer> fin = new ArrayList<>();
+        for(int k = 0; k < ans.length; k++)
+        {
+            if(ans[k] != -1)
+            {
+                fin.add(ans[k]);
+            }
+        }
+        System.out.println(fin);
+        return res;
+    }
+}
