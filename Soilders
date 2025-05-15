@@ -1,0 +1,18 @@
+def solve():
+    n = int(input())
+    q, s = map(int, input().split())
+    soldiers = list(range(1, n + 1))
+
+    for _ in range(q):
+        action = list(map(int, input().split()))
+        to_move = []
+        for i in range(s):
+            to_move.append(soldiers[action[i]-1])
+        
+        new_soldiers = to_move + [x for x in soldiers if x not in to_move]
+        soldiers = new_soldiers
+
+    k = int(input())
+    print(soldiers[k-1])
+
+solve()
