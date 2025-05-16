@@ -1,0 +1,64 @@
+import java.util.*;
+
+public class Solution {
+    public static int findMinimumProjects(int[] errorScore, int compP, int othQ) {
+        int projects = 0;
+        int n = errorScore.length;
+        
+        // Continue until all scores are zero
+        while (true) {
+            // Check if all scores are zero
+            boolean allZero = true;
+            for (int score : errorScore) {
+                if (score &gt; 0) {
+                    allZero = false;
+                    break;
+                }
+            }
+            if (allZero) break;
+            
+            // Find member with maximum score
+            int maxScore = 0;
+            int maxIndex = 0;
+            for (int i = 0; i &lt; n; i++) {
+                if (errorScore[i] &gt; maxScore) {
+                    maxScore = errorScore[i];
+                    maxIndex = i;
+                }
+            }
+            
+            // Update scores
+            errorScore[maxIndex] = Math.max(0, errorScore[maxIndex] - compP);
+            for (int i = 0; i &lt; n; i++) {
+                if (i != maxIndex && errorScore[i] &gt; 0) {
+                    errorScore[i] = Math.max(0, errorScore[i] - othQ);
+                }
+            }
+            
+            projects++;
+        }
+        
+        return projects;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        // Input
+        int errorScore_size = scanner.nextInt();
+        int[] errorScore = new int[errorScore_size];
+        
+        for (int i = 0; i &lt; errorScore_size; i++) {
+            errorScore[i] = scanner.nextInt();
+        }
+        
+        int compP = scanner.nextInt();
+        int othQ = scanner.nextInt();
+        
+        // Calculate and print result
+        int result = findMinimumProjects(errorScore, compP, othQ);
+        System.out.println(result);
+        
+        scanner.close();
+    }
+}
