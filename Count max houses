@@ -1,0 +1,37 @@
+def count_houses(grid):
+    if not grid:
+        return 0
+
+    rows = len(grid)
+    cols = len(grid[0])
+    visited = [[False for _ in range(cols)] for _ in range(rows)]
+    house_count = 0
+
+    def dfs(r, c):
+        # Directions for moving up, down, left, right
+        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+        stack = [(r, c)]
+        
+        while stack:
+            x, y = stack.pop()
+            for dr, dc in directions:
+                nr, nc = x + dr, y + dc
+                if 0 &lt;= nr &lt; rows and 0 &lt;= nc &lt; cols and not visited[nr][nc] and grid[nr][nc] == 1:
+                    visited[nr][nc] = True
+                    stack.append((nr, nc))
+
+    for i in range(rows):
+        for j in range(cols):
+            if grid[i][j] == 1 and not visited[i][j]:
+                house_count += 1
+                visited[i][j] = True
+                dfs(i, j)
+
+    return house_count
+
+# Input reading
+rows, cols = map(int, input().split())
+grid = [list(map(int, input().split())) for _ in range(rows)]
+
+# Output the number of houses
+print(count_houses(grid))
