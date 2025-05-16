@@ -62,3 +62,48 @@ public class Solution {
         scanner.close();
     }
 }
+
+
+def min_projects_to_zero(errorScore_size, errorScore, compP, othQ):
+    # 初始化项目计数
+    project_count = 0
+    
+    # 持续执行直到所有错误分数为零
+    while any(score > 0 for score in errorScore):
+        # 按降序排列错误分数
+        errorScore.sort(reverse=True)
+        
+        # 减少错误分数最高的成员的分数
+        if errorScore[0] > 0:
+            errorScore[0] -= compP
+        
+        # 减少其他成员的错误分数
+        for i in range(1, errorScore_size):
+            if errorScore[i] > 0:
+                errorScore[i] -= othQ
+        
+        # 确保错误分数不低于零
+        errorScore = [max(0, score) for score in errorScore]
+        
+        # 增加项目计数
+        project_count += 1
+    
+    return project_count
+
+# 输入处理
+if __name__ == "__main__":
+    # 输入团队成员数量
+    errorScore_size = int(input())
+    
+    # 输入错误分数列表
+    errorScore = list(map(int, input().split()))
+    
+    # 输入 P 和 Q
+    compP = int(input())
+    othQ = int(input())
+    
+    # 计算最少项目数
+    result = min_projects_to_zero(errorScore_size, errorScore, compP, othQ)
+    
+    # 输出结果
+    print(result)
