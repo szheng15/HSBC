@@ -1,0 +1,68 @@
+def calculate_group_id(num, listPFR):
+    group_id = 0
+
+    for i in range(num):
+        has_higher = False
+        has_lower_after_higher = False
+
+        # 检查当前学生后面是否有更高的 PFR
+        for j in range(i + 1, num):
+            if listPFR[j] > listPFR[i]:
+                has_higher = True
+                # 检查更高的 PFR 后面是否有更低的 PFR
+                for k in range(j + 1, num):
+                    if listPFR[k] < listPFR[j]:
+                        has_lower_after_higher = True
+                        break
+                break
+
+        # 根据条件分配分数
+        if not has_higher:
+            group_id += 15
+        elif has_higher and has_lower_after_higher:
+            group_id += 5
+        elif has_higher and not has_lower_after_higher:
+            group_id += 10
+
+    return group_id
+
+
+# 输入
+# num = int(input())
+# listPFR = list(map(int, input().split()))
+
+num=6
+listPFR=[1,4,5,2,7,8]
+             
+# 输出组 ID
+print(calculate_group_id(num, listPFR))
+
+public int calculate_group_id(int num, int[] listPRF){
+  int groupd_id = 0;
+  for(int i = 0; i < listPRF.length; i++){
+    boolean has_higher = false;
+    boolean has_lower_after_higher = false;
+    for(int j = i+1; j < listPRF.length; j++){
+      if (listPFR[j] > list PFT[i]){
+        has_higher = true;
+        for (int k = j+1; k < listPFT.length; k++){
+          if (listPFT[k] < listPFT[j]) {
+            has_lower_after_higher = true;
+            break;
+          }
+        }
+        break;
+      }
+    }
+    if (!has_higher){
+      group_id += 15;
+    }
+    else if (has_higher && has_lower_after_higher) {
+      group_id += 5;
+    }
+    else if (has_higher && !has_lower_after_higher) {
+      group_id += 10;
+    }
+  }
+return group_id;
+}
