@@ -1,0 +1,44 @@
+class Solution {
+    List<int[]> list = new ArrayList<>();
+    public int[] prisonAfterNDays(int[] cells, int n) {
+        //This is the base when cycle shows up
+        int base = 0;
+        
+        //Stores hash of array to detect cycle
+        Set<String> set = new HashSet<>();
+        
+        //For loop. If it breaks before i == N, this means we detected a cycle
+        int i = 0;
+        
+        for(i = 0; i < n; i++) {
+            //Get next turn of cells
+            int[] next = next(cells);
+            //Obtain hash
+            String nextStr = Arrays.toString(next);
+            
+            //If not dup
+            if(!set.contains(nextStr)) {
+                set.add(nextStr);
+                base++;
+                cells = next;
+                list.add(next);
+            } else { // Don't go further. Cycle detected.
+                break;
+            }
+        }
+        
+        //If cycle detected
+        if(i != n) {
+            n %= base; // get remainder
+            if((n - 1) >= 0) return list.get(n - 1); // Obtain N - th element from list
+        }
+        
+        return cells;
+    }
+
+    private int[] next(int[] cells) {
+        int[] temp = new int[cells.length];
+        for(int i = 1; i < cells.length - 1; i++) if(cells[i - 1] == cells[i + 1]) temp[i] = 1;
+        return temp;
+    }
+}
